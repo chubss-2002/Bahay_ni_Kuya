@@ -1,0 +1,38 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block title %}Boarding House{% endblock %} · Staywise</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=DM+Sans:wght@400;500;600;700&family=Manrope:wght@500;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
+</head>
+<body>
+{% if current_user %}
+<aside class="sidebar">
+  <a class="brand" href="{{ url_for('dashboard') }}"><span class="brand-mark">S</span><span>staywise<small>BOARDING HOUSE</small></span></a>
+  <div class="profile-mini"><div class="avatar">{{ current_user.name[:1]|upper }}</div><div><b>{{ current_user.name }}</b><small>{{ 'Administrator' if current_user.role=='admin' else 'Tenant account' }}</small></div></div>
+  <div class="nav-label">WORKSPACE</div>
+  <nav>
+    <a class="{{ 'active' if request.endpoint=='dashboard' else '' }}" href="{{ url_for('dashboard') }}">▦ <span>Dashboard</span></a>
+    <a class="{{ 'active' if request.endpoint=='rooms' else '' }}" href="{{ url_for('rooms') }}">▤ <span>Rooms</span></a>
+    {% if current_user.role=='admin' %}
+    <a class="{{ 'active' if request.endpoint=='tenants' else '' }}" href="{{ url_for('tenants') }}">♙ <span>Tenants</span></a>
+    {% endif %}
+    <a class="{{ 'active' if request.endpoint=='payments' else '' }}" href="{{ url_for('payments') }}">₱ <span>Payments</span></a>
+    <a class="{{ 'active' if request.endpoint=='maintenance' else '' }}" href="{{ url_for('maintenance') }}">⚒ <span>Maintenance</span></a>
+    {% if current_user.role=='admin' %}<a class="{{ 'active' if request.endpoint=='reports' else '' }}" href="{{ url_for('reports') }}">▥ <span>Reports</span></a>{% endif %}
+  </nav>
+  <div class="sidebar-bottom"><a href="{{ url_for('account') }}">⚙ <span>Account settings</span></a><a href="{{ url_for('logout') }}">↪ <span>Sign out</span></a></div>
+</aside>
+{% endif %}
+<main class="{{ 'main-with-sidebar' if current_user else 'auth-main' }}">
+  {% if current_user %}<header class="topbar"><div class="mobile-brand">staywise <span>·</span> {{ current_user.role|title }}</div><div class="topbar-right"><span class="date-chip">{{ today }}</span><div class="avatar small">{{ current_user.name[:1]|upper }}</div><a class="btn secondary logout-btn" href="{{ url_for('logout') }}">↪ Logout</a></div></header>{% endif %}
+  <div class="page-wrap">
+    {% with messages = get_flashed_messages(with_categories=true) %}{% if messages %}<div class="flashes">{% for category,message in messages %}<div class="flash {{ category }}">{{ message }}<button onclick="this.parentElement.remove()" aria-label="Dismiss">×</button></div>{% endfor %}</div>{% endif %}{% endwith %}
+    {% block content %}{% endblock %}
+    <footer>© {{ today[:4] }} Staywise <span>·</span> Boarding House Management</footer>
+  </div>
+</main>
+</body>
+</html>

@@ -1,0 +1,8 @@
+{% extends "base.html" %}{% block title %}Sign in{% endblock %}
+{% block content %}
+<div class="auth-layout"><section class="auth-art"><div class="art-logo">S</div><div class="art-copy"><span class="eyebrow light">A BETTER WAY TO STAY</span><h1>Room to live.<br>Space to thrive.</h1><p>Your boarding house, organized in one simple place.</p></div><div class="art-bottom">Simple living. Smarter management.</div></section>
+<section class="auth-panel"><div class="auth-box"><div class="welcome-icon">↗</div><span class="eyebrow">WELCOME BACK</span><h2>Sign in to Staywise</h2><p class="muted">Manage your stay or your property.</p>
+<form method="post" class="form-stack"><label>Email address<input type="email" name="email" placeholder="you@example.com" required autocomplete="email"></label><label>Password<input type="password" name="password" placeholder="Enter your password" required autocomplete="current-password"></label><button class="btn primary full" type="submit">Sign in <span>→</span></button></form>
+<div class="auth-separator"><span>NEW TO STAYWISE?</span></div><a class="btn secondary full" href="{{ url_for('register') }}">Create a tenant account</a>
+<div class="demo-note"><b>Demo administrator</b><span>admin@example.com · admin123</span></div></div></section></div>
+{% endblock %}

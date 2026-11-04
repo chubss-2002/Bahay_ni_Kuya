@@ -1,0 +1,5 @@
+{% extends "base.html" %}{% block title %}Account settings{% endblock %}
+{% block content %}
+<div class="page-heading"><div><span class="eyebrow">PERSONAL PREFERENCES</span><h1>Account settings</h1><p>Manage your profile and sign-in password.</p></div></div>
+<div class="panel settings-panel"><div class="settings-intro"><div class="avatar large">{{ current_user.name[:1]|upper }}</div><div><h2>{{ current_user.name }}</h2><p>{{ current_user.email }} · {{ current_user.role|title }}</p></div></div><form method="post" class="form-stack"><label>Display name<input name="name" value="{{ current_user.name }}" required></label><div class="section-rule"><span>CHANGE PASSWORD</span></div><p class="muted small-text">Leave password fields blank to keep your current password.</p><label>Current password<input type="password" name="current_password" autocomplete="current-password"></label><label>New password<input type="password" name="new_password" minlength="8" autocomplete="new-password" placeholder="At least 8 characters"></label><button class="btn primary">Save changes</button></form></div>
+{% endblock %}
